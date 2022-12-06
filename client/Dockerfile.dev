@@ -1,0 +1,15 @@
+FROM node:14-slim
+WORKDIR /app
+
+RUN apt-get update && apt-get install -y procps
+
+COPY ./package.json ./yarn.lock ./
+COPY ./tsconfig.json ./
+# COPY package*.json ./
+RUN  yarn config set network-timeout 300000
+RUN yarn install
+# RUN npm i
+
+COPY . .
+CMD ["yarn", "start"]
+#CMD ["npm", "run", "start"]
